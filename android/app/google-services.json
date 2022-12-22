@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "798925931921",
+    "project_id": "gauge-ro",
+    "storage_bucket": "gauge-ro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798925931921:android:673c179a0c464bde6e4630",
+        "android_client_info": {
+          "package_name": "com.example.existing_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798925931921-74debo34du3cfbmajr0oujh09kdin7ct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.existing_ui",
+            "certificate_hash": "2954406c8258152dfa8642f7e34dde3d45dd243d"
+          }
+        },
+        {
+          "client_id": "798925931921-13dbsear0uojecehdcanqa1sip5n5rh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOeOSr_xM77N4KnggZeyKq1uDt5hz0uBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798925931921-13dbsear0uojecehdcanqa1sip5n5rh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
