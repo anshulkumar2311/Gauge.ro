@@ -24,6 +24,7 @@ class AuthClass{
         backgroundColor: Colors.grey,
       );
     };
+
     PhoneVerificationFailed verificationFailed = (FirebaseAuthException exception){
       Fluttertoast.showToast(
         msg: exception.toString(),
