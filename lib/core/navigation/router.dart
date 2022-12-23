@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:existing_ui/Screens/LocationScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -99,6 +100,9 @@ abstract class AppRouter {
       case PhoneRoute:
         return getPageRoute(settings: settings, view: PhoneLogin());
 
+
+      case LocationRoute:
+        return getPageRoute(settings: settings, view: LocationScreen());
       default:
         return getPageRoute(
           settings: settings,

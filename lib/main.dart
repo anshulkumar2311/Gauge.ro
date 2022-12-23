@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:existing_ui/Screens/Auth_Service.dart';
+import 'package:existing_ui/Screens/LocationScreen.dart';
 import 'package:existing_ui/Screens/Phone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
   PageController? _pageController;
   Timer? _pageAnimationTimer;
   int _page = 0;
-
+  AuthClass authClass = AuthClass();
+  String Route = PhoneRoute;
   void _animatePages() {
     if (_pageController == null) return;
     if (_page < 2) {
@@ -65,6 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
         duration: const Duration(milliseconds: 700),
         curve: Curves.easeIn,
       );
+    }
+  }
+
+  void checkLogin() async{
+    String? token = await authClass.getTocken();
+    if(token!=null){
+     setState(() {
+       Route = LocationRoute;
+     });
     }
   }
 
@@ -138,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     AppButtonPrimary(
                       label: 'Get Started',
                       onPressed: () =>
-                          AppNavigator.pushNamedReplacement(PhoneRoute),
+                          AppNavigator.pushNamedReplacement(Route),
                     ),
                     // SizedBox(height: 42.h),
                   ],

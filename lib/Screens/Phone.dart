@@ -3,6 +3,7 @@ import 'package:existing_ui/Screens/OTPScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:permission_handler/permission_handler.dart';
 import '../shared/res/colors.dart';
 
 class PhoneLogin extends StatefulWidget {

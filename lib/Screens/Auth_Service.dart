@@ -6,55 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthClass{
-  GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
   final storage = new FlutterSecureStorage();
   FirebaseAuth auth = FirebaseAuth.instance;
-  Future<void> googleSignIn(BuildContext context) async{
-    try{
-      GoogleSignInAccount? googleSignInAccount =await _googleSignIn.signIn();
-      if(googleSignInAccount!=null){
-        GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-        AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
-        try{
-          UserCredential userCredential = await auth.signInWithCredential(credential);
-          storageToken(userCredential);
-          Navigator.push(context, MaterialPageRoute(builder: (builder) => LocationScreen()));
-        }
-        catch(e){
-          final snackbar = SnackBar(content: Text(e.toString()));
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-        }
-      }
-      else{
-        final snackbar = SnackBar(content: Text("Not able to sign in"));
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      }
-    }
-    catch(e){
-      print(e);
-      final snackbar = SnackBar(content: Text(e.toString()));
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    }
-  }
-
-  Future<void> logout() async{
-    try{
-      await _googleSignIn.signOut();
-      await auth.signOut();
-      await storage.delete(key: "token");
-    }
-    catch(e){
-      print(e);
-    }
-  }
 
   Future<void> storageToken(UserCredential userCredential) async{
     await storage.write(key: "token", value: userCredential.credential?.token.toString());
@@ -72,7 +25,6 @@ class AuthClass{
       );
     };
     PhoneVerificationFailed verificationFailed = (FirebaseAuthException exception){
-
       Fluttertoast.showToast(
         msg: exception.toString(),
         backgroundColor: Colors.grey,
@@ -131,5 +83,4 @@ class AuthClass{
       print("Error1");
     }
   }
-
 }

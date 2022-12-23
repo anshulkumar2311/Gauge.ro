@@ -3,9 +3,11 @@ import 'package:existing_ui/Screens/Auth_Service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'LocationScreen.dart';
 
 
@@ -206,15 +208,39 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
               ),
               suffixIcon: InkWell(
                 onTap:wait?null: () async{
-              if(_formkey.currentState!.validate()){
-                  startTimer();
-                  setState(() {
-                    start=30;
-                    wait =true;
-                    buttonName="Resend";
-                  });
+                  var SMS = await Permission.sms.status;
+                  if(!SMS.isGranted){
+                    await Permission.sms.request();
+                  }
+                  if(SMS.isGranted){
+                  Fluttertoast.showToast(
+                    msg: "SMS Permission Given",
+                    backgroundColor: Colors.grey,
+                  );
+                  if(_formkey.currentState!.validate()) {
+                    startTimer();
+                    setState(() {
+                      start = 45;
+                      wait = true;
+                      buttonName = "Resend";
+                    });
+                  }
+                  else{
+                    Fluttertoast.showToast(
+                      msg: "Please Allow for SMS Permission",
+                      backgroundColor: Colors.grey,
+                    );
+                  }
                   await authClass.verifyPhoneNumber("+91 ${phoneController.text}", context,setData);
-                }},
+                }
+                  else{
+                  Fluttertoast.showToast(
+                  msg: "Please Allow for SMS Permission",
+                  backgroundColor: Colors.grey,
+                  );
+                  await Permission.sms.request();
+                  }
+                  },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 15),
                   child: Text(buttonName, style: TextStyle(

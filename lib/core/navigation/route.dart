@@ -18,3 +18,4 @@ const String microwaveRoute = '/microwave';
 const String profileRoute = '/profileRoute';
 const String settingsRoute = '/settingsRoute';
 const String PhoneRoute = "/phoneRoute";
+const String LocationRoute = "/locationRoute";
