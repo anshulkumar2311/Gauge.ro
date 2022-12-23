@@ -6,7 +6,6 @@ import 'package:wifi_scan/wifi_scan.dart';
 
 class WifiPage extends StatefulWidget {
   const WifiPage({Key? key}) : super(key: key);
-
   @override
   State<WifiPage> createState() => _WifiPageState();
 }
@@ -15,7 +14,12 @@ class _WifiPageState extends State<WifiPage> {
   List<WiFiAccessPoint> accessPoints = <WiFiAccessPoint>[];
   StreamSubscription<List<WiFiAccessPoint>>? subscription;
   bool shouldCheckCan = true;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getScannedResults(context);
+    super.initState();
+  }
   bool get isStreaming => subscription != null;
 
   Future<void> _startScan(BuildContext context) async {
@@ -98,23 +102,24 @@ class _WifiPageState extends State<WifiPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.perm_scan_wifi),
-                                  label: const Text('SCAN'),
-                                  onPressed: () async => _startScan(context),
+                                // ElevatedButton.icon(
+                                //   icon: const Icon(Icons.perm_scan_wifi),
+                                //   label: const Text('SCAN'),
+                                //   onPressed: () async => _startScan(context),
+                                // ),
+                                // ElevatedButton.icon(
+                                //   icon: const Icon(Icons.refresh),
+                                //   label: const Text('GET'),
+                                //   onPressed: () async => _getScannedResults(context),
+                                // ),
+                                SizedBox(
+                                  height: 84.h,
                                 ),
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.refresh),
-                                  label: const Text('GET'),
-                                  onPressed: () async => _getScannedResults(context),
-                                ),
-                                _buildToggle(
-                                  label: "STREAM",
-                                  value: isStreaming,
-                                  onChanged: (shouldStream) async => shouldStream
-                                      ? await _startListeningToScanResults(context)
-                                      : _stopListeningToScanResults(),
-                                ),
+                                Expanded(child: Text("Please Select a wifi a to be collected ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                                ),),),
                               ],
                             ),
                             const Divider(),
