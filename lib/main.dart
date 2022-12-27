@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:existing_ui/Screens/Auth_Service.dart';
-import 'package:existing_ui/Screens/LocationScreen.dart';
-import 'package:existing_ui/Screens/Phone.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Screens/Bluetooth.dart';
 import 'core/navigation/navigator.dart';
-
 import 'shared/res/res.dart';
 import 'shared/widgets/onboarding_widget.dart';
 import 'shared/widgets/page_indicator.dart';
@@ -19,11 +16,11 @@ void main() async{
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  // const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -61,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _page = 0;
   AuthClass authClass = AuthClass();
   String Route = PhoneRoute;
+  var auth = FirebaseAuth.instance;
+  var isLogin = false;
   void _animatePages() {
     if (_pageController == null) return;
     if (_page < 2) {
@@ -72,17 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void checkLogin() async{
-    String? token = await authClass.getTocken();
-    if(token!=null){
-     setState(() {
-       Route = LocationRoute;
-     });
-    }
+    auth.authStateChanges().listen((User? user) {
+      if(user != null && mounted){
+        setState(() {
+          isLogin=true;
+        });
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    checkLogin();
     _pageController = PageController();
     _pageAnimationTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _animatePages();
@@ -150,11 +151,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     AppButtonPrimary(
                       label: 'Get Started',
                       onPressed: () =>
-                          AppNavigator.pushNamedReplacement(Route),
+                          AppNavigator.pushNamedReplacement(isLogin ? LocationRoute: PhoneRoute),
                     ),
                     // SizedBox(height: 42.h),
                   ],
-                ))
+                ),
+            ),
           ],
         ),
       ),

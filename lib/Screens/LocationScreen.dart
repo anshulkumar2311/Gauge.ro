@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-import 'Bluetooth.dart';
-
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({Key? key}) : super(key: key);
@@ -25,7 +23,7 @@ class _LocationScreenState extends State<LocationScreen> {
           msg: 'Provide Access to Location',
           backgroundColor: Colors.grey,
         );
-      }
+    }
     else if (permission == LocationPermission.deniedForever) {
     Fluttertoast.showToast(
     msg: 'Location permissions are permanently denied, we cannot request permissions.',
@@ -35,7 +33,6 @@ class _LocationScreenState extends State<LocationScreen> {
     else{
       Navigator.push(context, MaterialPageRoute(builder: (builder)=>BluetoothPermission()));
     }
-
   }
   @override
   Widget build(BuildContext context) {

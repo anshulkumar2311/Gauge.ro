@@ -18,7 +18,7 @@ class PhoneAuthPage extends StatefulWidget {
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
   int start=45;
   bool wait = false;
-  String buttonName='Send';
+  String? buttonName='Send';
   TextEditingController phoneController = TextEditingController();
   AuthClass authClass = AuthClass();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -64,12 +64,7 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                             buttonName = "Resend";
                           });
                         }
-                        else{
-                          Fluttertoast.showToast(
-                            msg: "Please Allow for SMS Permission",
-                            backgroundColor: Colors.grey,
-                          );
-                        }
+
                         await authClass.verifyPhoneNumber("+91 ${phoneController.text}", context,setData);
                       }
                       else{
@@ -90,9 +85,9 @@ class _PhoneAuthPageState extends State<PhoneAuthPage> {
                             Color(0xffe0205d),
                           ]),
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          "Send OTP",
+                          "$buttonName OTP",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
